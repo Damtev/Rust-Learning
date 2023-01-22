@@ -1,6 +1,8 @@
 mod vec3;
+mod color;
 
 use std::io::{stderr, Write};
+use crate::color::Color;
 
 fn main() {
     const IMAGE_WIDTH: u64 = 256;
@@ -22,11 +24,9 @@ fn main() {
             let g = (j as f64) / HEIGHT_DENOM;
             let b = 0.25;
 
-            let ir = (255.999 * r) as u64;
-            let ig = (255.999 * g) as u64;
-            let ib = (255.999 * b) as u64;
+            let color = Color::new(r, g, b);
 
-            println!("{} {} {}", ir, ig, ib);
+            println!("{}", color.format_color());
         }
     }
 
