@@ -2,6 +2,7 @@ mod vec3;
 mod color;
 mod ray;
 mod sphere;
+mod hit;
 
 use std::io::{stderr, Write};
 use crate::color::Color;
