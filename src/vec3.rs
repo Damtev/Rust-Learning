@@ -31,6 +31,10 @@ impl Vec3 {
         (self * self).sqrt()
     }
 
+    pub fn normalized(self) -> Vec3 {
+        self / self.length()
+    }
+
     pub fn cross_multiply(self, rhs: Self) -> Self {
         Vec3 {
             data: [
@@ -94,6 +98,14 @@ impl Mul<f64> for Vec3 {
         Vec3 {
             data: [self.x() * rhs, self.y() * rhs, self.z() * rhs]
         }
+    }
+}
+
+impl Mul<Vec3> for f64 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Vec3) -> Self::Output {
+        rhs * self
     }
 }
 
