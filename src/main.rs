@@ -3,17 +3,25 @@ mod color;
 mod ray;
 mod sphere;
 mod hit;
+mod world;
 
 use std::io::{stderr, Write};
 use crate::color::Color;
 use crate::ray::Ray;
+use crate::sphere::Sphere;
 use crate::vec3::{Point3, Vec3};
+use crate::world::World;
 
 fn main() {
     // Image
     const ASPECT_RATIO: f64 = 16.0 / 9.0;
     const IMAGE_WIDTH: u64 = 256;
     const IMAGE_HEIGHT: u64 = ((256 as f64) / ASPECT_RATIO) as u64;
+
+    // World
+    let mut world = World::new();
+    world.push(Box::new(Sphere::new(Point3::new(0.0, 0.0, -1.0), 0.5)));
+    world.push(Box::new(Sphere::new(Point3::new(0.0, -100.5, -1.0), 100.0)));
 
     // Camera
     let viewport_height = 2.0;
@@ -43,7 +51,7 @@ fn main() {
 
             let r = Ray::new(origin,
                              lower_left_corner + u * horizontal + v * vertical - origin);
-            let pixel_color = r.color();
+            let pixel_color = r.color(&world);
 
             println!("{}", pixel_color.format());
         }
