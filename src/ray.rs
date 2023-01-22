@@ -1,4 +1,5 @@
 use crate::color::Color;
+use crate::sphere::check_hit_sphere;
 use crate::vec3::{Point3, Vec3};
 
 pub struct Ray {
@@ -23,6 +24,10 @@ impl Ray {
     }
 
     pub fn color(&self) -> Color {
+        if check_hit_sphere(Point3::new(0.0, 0.0, -1.0), 0.5, self) {
+            return Color::new(1.0, 0.0, 0.0);
+        }
+
         let unit_direction = self.direction.normalized();
         let t = 0.5 * (unit_direction.y() + 1.0);
 
