@@ -31,7 +31,7 @@ impl Ray {
         }
 
         if let Some(rec) = world.hit(self, 0.001, f64::INFINITY) {
-            let target = rec.p + rec.normal + Vec3::random_in_unit_sphere();
+            let target = rec.p + rec.normal + Vec3::random_in_unit_sphere().normalized();
             let ray = Ray::new(rec.p, target - rec.p);
 
             0.5 * ray.color(world, depth - 1)
