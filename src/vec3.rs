@@ -78,6 +78,26 @@ impl Vec3 {
             (-1.0) * in_unit_sphere
         }
     }
+
+    pub fn near_zero(self) -> bool {
+        const EPS: f64 = 1.0e-8;
+
+        self.x().abs() < EPS && self.y().abs() < EPS && self.z().abs() < EPS
+    }
+
+    pub fn reflect(self, n: Vec3) -> Vec3 {
+        self - 2.0 * self * n * n
+    }
+
+    pub fn hadamard_product(self, rhs: Self) -> Self {
+        Vec3 {
+            data: [
+                self.x() * rhs.x(),
+                self.y() * rhs.y(),
+                self.z() * rhs.z()
+            ]
+        }
+    }
 }
 
 impl Index<usize> for Vec3 {

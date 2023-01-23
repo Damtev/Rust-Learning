@@ -31,10 +31,11 @@ impl Ray {
         }
 
         if let Some(rec) = world.hit(self, 0.001, f64::INFINITY) {
-            let target = rec.p + Vec3::random_in_hemisphere(rec.normal);
-            let ray = Ray::new(rec.p, target - rec.p);
-
-            0.5 * ray.color(world, depth - 1)
+            if let Some((attenuation, scattered)) = rec.material.scatter(self, &rec) {
+                attenuation.hadamard_product(scattered.color(world, depth - 1))
+            } else {
+                Color::new(0.0, 0.0, 0.0)
+            }
         } else {
             let unit_direction = self.direction().normalized();
             let t = 0.5 * (unit_direction.y() + 1.0);
