@@ -30,7 +30,7 @@ impl Ray {
             return Color::new(0.0, 0.0, 0.0);
         }
 
-        if let Some(rec) = world.hit(self, 0.0, f64::INFINITY) {
+        if let Some(rec) = world.hit(self, 0.001, f64::INFINITY) {
             let target = rec.p + rec.normal + Vec3::random_in_unit_sphere();
             let ray = Ray::new(rec.p, target - rec.p);
 
