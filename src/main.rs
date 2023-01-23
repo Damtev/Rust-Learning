@@ -21,6 +21,7 @@ fn main() {
     const IMAGE_WIDTH: u64 = 256;
     const IMAGE_HEIGHT: u64 = ((IMAGE_WIDTH as f64) / ASPECT_RATIO) as u64;
     const SAMPLES_PER_PIXEL: u64 = 100;
+    const MAX_DEPTH: u64 = 5;
 
     // World
     let mut world = World::new();
@@ -52,7 +53,7 @@ fn main() {
                 let v = ((j as f64) + random_v) / ((IMAGE_HEIGHT - 1) as f64);
 
                 let ray = cam.get_ray(u, v);
-                pixel_color += ray.color(&world);
+                pixel_color += ray.color(&world, MAX_DEPTH);
             }
 
             println!("{}", pixel_color.format(SAMPLES_PER_PIXEL));

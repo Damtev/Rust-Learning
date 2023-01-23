@@ -25,12 +25,20 @@ impl Ray {
         self.origin + t * self.direction
     }
 
-    pub fn color(&self, world: &World) -> Color {
+    pub fn color(&self, world: &World, depth: u64) -> Color {
+        if depth <= 0 {
+            return Color::new(0.0, 0.0, 0.0);
+        }
+
         if let Some(rec) = world.hit(self, 0.0, f64::INFINITY) {
-            0.5 * (rec.normal + Color::new(1.0, 1.0, 1.0))
+            let target = rec.p + rec.normal + Vec3::random_in_unit_sphere();
+            let ray = Ray::new(rec.p, target - rec.p);
+
+            0.5 * ray.color(world, depth - 1)
         } else {
             let unit_direction = self.direction().normalized();
             let t = 0.5 * (unit_direction.y() + 1.0);
+
             (1.0 - t) * Color::new(1.0, 1.0, 1.0) + t * Color::new(0.5, 0.7, 1.0)
         }
     }
