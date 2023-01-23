@@ -36,7 +36,7 @@ impl Vec3 {
         self / self.length()
     }
 
-    pub fn cross_multiply(self, rhs: Self) -> Self {
+    pub fn cross_product(self, rhs: Self) -> Self {
         Vec3 {
             data: [
                 self.y() * rhs.z() - self.z() * rhs.y(),
